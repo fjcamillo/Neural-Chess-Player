@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 
 
-def cnn_model(device='/cpu:0', epoch=1):
+def cnn_model(train_x, train_y, test_x, test_y, device='/cpu:0', epoch=1):
     with tf.device(device):
         x = tf.placeholder(tf.float32, [None, 48, 48, 3])
         y = tf.placeholder(tf.float32, [None, 12])
@@ -47,4 +47,9 @@ def cnn_model(device='/cpu:0', epoch=1):
         cross_prediction = tf.equal(tf.argmax(fc3, 1), tf.argmax(y, 1))
         accuracy = tf.reduce_mean(tf.cast(cross_prediction, tf.float32))
 
-    sess = tf.InteractiveSession().run()
+    sess = tf.InteractiveSession()
+    tf.initiate_global_variables().run()
+
+    for i in range(epoch):
+        if i%100==0:
+            print(sess.run(accuracy, feed_dict={x:x, y:y, keep_prob:0.6}))
