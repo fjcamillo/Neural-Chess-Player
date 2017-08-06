@@ -27,7 +27,11 @@ def cnn_model(device='/cpu:0'):
         fc3_b = tf.Variable(tf.ones[12])
 
         #MODEL
-
         conv1 = tf.nn.relu(tf.nn.conv2d(x, conv1_w, strides=[1, 1, 1, 1], padding='SAME'))
-        conv2 = tf.nn.relu(tf.nn.conv2d(conv1, conv2_w, strides=[1, 1, 1, 1], padding='SAME'))
-        con
+        max_1 = tf.nn.max_pool(conv1, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
+        conv2 = tf.nn.relu(tf.nn.conv2d(max_1, conv2_w, strides=[1, 1, 1, 1], padding='SAME'))
+        max_2 = tf.nn.max_pool(conv2, kstrides = [1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
+        conv3 = tf.nn.relu(tf.nn.conv2d(max_2, conv3_w, stride[1, 1, 1, 1], padding='SAME'))
+        max_3 = tf.nn.max_pool(conv3, kstrides=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
+
+        
